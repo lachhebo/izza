@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="izza",
-    version="0.1",
+    version="0.1.0",
     author="Ismaël Lachheb",
     author_email="ismael.lachheb@protonmail.com",
     description="A Personnal machine learning toolbox",

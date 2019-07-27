@@ -7,15 +7,8 @@ Izza is my personal data science and machine learning toolbox. It is written in 
 Some clustering methods are implemented : 
 
 - [x] clusterbagging 
-- [ ] clusterisolation
 
 There is also some personnal function : 
 
 - [x] precision 
-- [x] recall 
-
-## Installation (not yet on Pypi): 
-
-```shell
-    pip install izza
-```
+- [x] recall
