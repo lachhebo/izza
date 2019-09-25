@@ -1,7 +1,7 @@
 from sklearn.metrics.cluster import contingency_matrix
 
 
-def my_custom_f_score(label_observed, label_pred, cut_CP, cut_CR):
+def f_macro_score(label_observed, label_pred, cut_CP, cut_CR):
     '''
     assess the f-macro score
 
@@ -80,7 +80,7 @@ def my_custom_f_score(label_observed, label_pred, cut_CP, cut_CR):
         return global_f_score
 
 
-def my_custom_p_score(label_observed, label_pred, cut_CP, cut_CR):
+def precision_macro_score(label_observed, label_pred, cut_CP, cut_CR):
     '''
     evaluate the mean precision on the cluster respecting the constraint
 
@@ -216,7 +216,7 @@ def viable_clusters(label_observed, label_pred, cut_CP, cut_CR):
     return viable_cluster
 
 
-def my_custom_r_score(label_observed, label_pred, cut_CP, cut_CR):
+def recall_macro_score(label_observed, label_pred, cut_CP, cut_CR):
     '''
     evaluate the sum of the recall on the cluster respecting the constraints
 
