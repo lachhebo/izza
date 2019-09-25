@@ -3,8 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import minisom
-
-
+from sklearn.decomposition import PCA
 
 def pca_visualisation(X, y, colordict, labeldict, markerdict, alphadict, figsize = (10,10)):
     '''
