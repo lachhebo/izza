@@ -56,7 +56,8 @@ def pca_visualisation(X, y, colordict, labeldict, markerdict, alphadict, figsize
         plt.scatter(X_pca[ix,0],X_pca[ix,1], c = cdict[l], s=40, label = labl[l], marker = marker[l], alpha = alpha[l])
 
     plt.xlabel("first principal component")
-    plt.xlabel("second principal component")
+    plt.ylabel("second principal component")
+    plt.legend()
     
     return pca.explained_variance_ratio_ 
 
