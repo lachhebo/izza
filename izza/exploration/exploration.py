@@ -1,6 +1,8 @@
 import numpy as np 
+import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import minisom
 
 def missingData(data):
     """Return a pandas dataframe of the missing observations by variables (number and percentage) and plot 
@@ -24,3 +26,138 @@ def tabcategorial(data, variable, hue):
     "return a pandas dataframe containing data from the category by class (useful for binary classification)"
     pass
 
+def camembert_plot(
+    dataset,
+    variable,
+    target,
+    cutoff,
+    plot=True,
+    figsize=(
+        8,
+        8)):
+    '''
+    plot a camembert plot for a variable in the case of the non fraudster
+    population and an other one for the fraudster population and print a
+    table containing the data used to create the figures.
+
+    Parameters
+    ----------
+
+    dataset : a pandas dataframe
+
+    variable : the name of the variable to plot
+
+    target : the name of the target variable to take into account
+
+    cutoff : the minimum importance for a modality
+
+    plot : a boolean representing if it is needed to plot the data
+
+    figsize : the size of the figure
+
+    Return
+    -------
+
+    table : the table containing the data used to create the figures
+
+    '''
+    data_nofrd = dataset[dataset[target] == 0]
+    data_fraud = dataset[dataset[target] == 1]
+
+    nofraudster = (data_nofrd[variable].value_counts() / len(data_nofrd)) * 100
+    fraudsters = (data_fraud[variable].value_counts() / len(data_fraud)) * 100
+
+    nofraudster = nofraudster.to_frame()
+    fraudsters = fraudsters.to_frame()
+
+    if plot:
+        nofraudster[nofraudster[variable] > cutoff].plot.pie(
+            variable, figsize=(5, 5))
+        fraudsters[fraudsters[variable] > cutoff].plot.pie(
+            variable, figsize=(5, 5))
+
+    result = pd.concat([nofraudster, fraudsters], axis=1, join='inner')
+    result.columns = ['not fraudsters', 'fraudsters']
+
+    return result
+
+def kohohen_maps(X, y, som, size_x, size_y):
+    '''
+    plot a kohohen maps, the number in red is the proportion of fraudster in
+    each cell and the color represent the distance of each withe the
+    neighbouring cells.
+
+    Parameters
+    ----------
+
+    X : a numpy array with explaining features
+
+    y : a numpy array with the target feature
+
+    som : a minisom instance
+
+    size_x : the size of the grid (width)
+
+    size_y : the size of the grid (height)
+
+    '''
+
+    plt.figure(figsize=(size_x, size_y))
+
+    plt.pcolor(som.distance_map().T, cmap='bone_r')
+    plt.colorbar()
+
+    fraudsters = {}
+    total = {}
+    peri = {}
+
+    for cnt, xx in enumerate(X):
+        w = som.winner(xx)  # getting the winner
+
+        if str(w[0] + .3) + str(w[1] + .3) in fraudsters:
+
+            calcul1 = fraudsters[str(w[0] + .3) + str(w[1] + .3)]
+            calcul2 = total[str(w[0] + .3) + str(w[1] + .3)]
+
+            fraudsters[str(w[0] + .3) + str(w[1] + .3)] = calcul1 + y[cnt]
+            total[str(w[0] + .3) + str(w[1] + .3)] = calcul2 + 1
+
+        else:
+            fraudsters[str(w[0] + .3) + str(w[1] + .3)] = y[cnt]
+            total[str(w[0] + .3) + str(w[1] + .3)] = 1
+            peri[str(w[0] + .3) + str(w[1] + .3)] = (w[0] + .3, w[1] + .3)
+
+    proportion = {}
+
+    for i in total:
+        proportion[i] = round(fraudsters[i] / total[i], 3)
+
+    for i in total:
+        prop = proportion[i]
+        lat, long = peri[i]
+
+        plt.text(lat, long, s=prop, color="red")
+
+
+def activation_frequencies(X, som, size_x, size_y):
+    '''
+    plot a kohohen maps, the color in each cell represent how many observation
+    end up in the cell
+
+    Parameters
+    ----------
+
+    X : a numpy array with explaining features
+
+    som : a minisom instance
+
+    size_x : the size of the grid (width)
+
+    size_y : the size of the grid (height)
+
+    '''
+    plt.figure(figsize=(size_x, size_y))
+    frequencies = som.activation_response(X)
+    plt.pcolor(frequencies.T, cmap='Blues')
+    plt.colorbar()
+    plt.show()
