@@ -4,6 +4,63 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import minisom
 
+
+
+def pca_visualisation(X, y, colordict, labeldict, markerdict, alphadict, figsize = (10,10)):
+    '''
+    plot a visualisation of the data using the two main composant of a PCA. 
+    
+    Parameters
+    ----------
+
+    X : the explaining features, they should be normalised (numpy)
+
+    y : the target feature (numpy)
+
+    colordict : the color of each class present in y
+    
+    labeldict : the label of each class present in y
+
+    markerdict : the marker of each class present in y
+
+    alphadict :the alpha of each class present in y
+
+    figsize : the size of the figure
+    
+    Return
+    -------
+
+    explained_variance_ratio : the ratio of the explained variance obtained with the PCA.
+    
+    Examples
+    --------
+    >>> from izza import pca_visualisation
+    >>> cdict = {0 : "green", 1 : "red"}
+    >>> labl  = {0: "healthy", 1 : "sick"}
+    >>> marker= {0 : "o", 1: "*"}
+    >>> alpha = {0: 0.5, 1: 0.5} 
+    >>> pca_visualisation(X,y,cdict,labl,marker,alpha)
+    '''
+    
+    pca = PCA(n_components = 2)
+    X_pca = pca.fit_transform(X)
+
+    cdict = colordict
+    labl = labeldict
+    marker = markerdict
+    alpha = alphadict
+
+    fig = plt.figure(figsize=figsize)
+
+    for l in np.unique(y):
+        ix = np.where(y == l)
+        plt.scatter(X_pca[ix,0],X_pca[ix,1], c = cdict[l], s=40, label = labl[l], marker = marker[l], alpha = alpha[l])
+
+    plt.xlabel("first principal component")
+    plt.xlabel("second principal component")
+    
+    return pca.explained_variance_ratio_ 
+
 def missingData(data):
     """Return a pandas dataframe of the missing observations by variables (number and percentage) and plot 
     a graph of those missing values by variable.
