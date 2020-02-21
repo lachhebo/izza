@@ -1,14 +1,15 @@
-import numpy as np 
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import minisom
 from sklearn.decomposition import PCA
 
-def pca_visualisation(X, y, colordict, labeldict, markerdict, alphadict, figsize = (10,10)):
+
+def pca_visualisation(X, y, colordict, labeldict, markerdict, alphadict, figsize=(10, 10)):
     '''
     plot a visualisation of the data using the two main composant of a PCA. 
-    
+
     Parameters
     ----------
 
@@ -17,7 +18,7 @@ def pca_visualisation(X, y, colordict, labeldict, markerdict, alphadict, figsize
     y : the target feature (numpy)
 
     colordict : the color of each class present in y
-    
+
     labeldict : the label of each class present in y
 
     markerdict : the marker of each class present in y
@@ -25,12 +26,12 @@ def pca_visualisation(X, y, colordict, labeldict, markerdict, alphadict, figsize
     alphadict :the alpha of each class present in y
 
     figsize : the size of the figure
-    
+
     Return
     -------
 
     explained_variance_ratio : the ratio of the explained variance obtained with the PCA.
-    
+
     Examples
     --------
     >>> from izza import pca_visualisation
@@ -40,8 +41,8 @@ def pca_visualisation(X, y, colordict, labeldict, markerdict, alphadict, figsize
     >>> alpha = {0: 0.5, 1: 0.5} 
     >>> pca_visualisation(X,y,cdict,labl,marker,alpha)
     '''
-    
-    pca = PCA(n_components = 2)
+
+    pca = PCA(n_components=2)
     X_pca = pca.fit_transform(X)
 
     cdict = colordict
@@ -49,49 +50,45 @@ def pca_visualisation(X, y, colordict, labeldict, markerdict, alphadict, figsize
     marker = markerdict
     alpha = alphadict
 
-    fig = plt.figure(figsize=figsize)
+    _ = plt.figure(figsize=figsize)
 
     for l in np.unique(y):
         ix = np.where(y == l)
-        plt.scatter(X_pca[ix,0],X_pca[ix,1], c = cdict[l], s=40, label = labl[l], marker = marker[l], alpha = alpha[l])
+        plt.scatter(X_pca[ix, 0], X_pca[ix, 1], c=cdict[l],
+                    s=40, label=labl[l], marker=marker[l], alpha=alpha[l])
 
     plt.xlabel("first principal component")
     plt.ylabel("second principal component")
     plt.legend()
-    
-    return pca.explained_variance_ratio_ 
+
+    return pca.explained_variance_ratio_
+
 
 def missingData(data):
     """Return a pandas dataframe of the missing observations by variables (number and percentage) and plot 
     a graph of those missing values by variable.
-    
     """
-    total = data.isnull().sum().sort_values(ascending = False)
-    percent = (data.isnull().sum()/data.isnull().count()*100).sort_values(ascending = False)
+    total = data.isnull().sum().sort_values(ascending=False)
+    percent = (data.isnull().sum()/data.isnull().count()
+               * 100).sort_values(ascending=False)
     md = pd.concat([total, percent], axis=1, keys=['Total', 'Percent'])
     md = md[md["Percent"] > 0]
-    sns.set(style = 'darkgrid')
-    plt.figure(figsize = (8, 4))
+    sns.set(style='darkgrid')
+    plt.figure(figsize=(8, 4))
     plt.xticks(rotation='90')
-    sns.barplot(md.index, md["Percent"],color="g",alpha=0.8)
+    sns.barplot(md.index, md["Percent"], color="g", alpha=0.8)
     plt.xlabel('Features', fontsize=15)
     plt.ylabel('Percent of missing values', fontsize=15)
     plt.title('Percent missing data by feature', fontsize=15)
     return md
 
+
 def tabcategorial(data, variable, hue):
     "return a pandas dataframe containing data from the category by class (useful for binary classification)"
     pass
 
-def camembert_plot(
-    dataset,
-    variable,
-    target,
-    cutoff,
-    plot=True,
-    figsize=(
-        8,
-        8)):
+
+def camembert_plot(dataset, variable, target, cutoff, plot=True, figsize=(8, 8)):
     '''
     plot a camembert plot for a variable in the case of the non fraudster
     population and an other one for the fraudster population and print a
@@ -137,6 +134,7 @@ def camembert_plot(
     result.columns = ['not fraudsters', 'fraudsters']
 
     return result
+
 
 def kohohen_maps(X, y, som, size_x, size_y):
     '''

@@ -1,4 +1,4 @@
-import numpy as np 
+import numpy as np
 from sklearn.metrics import recall_score, precision_score
 
 
