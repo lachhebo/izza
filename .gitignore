@@ -1,3 +1,4 @@
 build/
 dist/
 izza.egg-info/
+.vscode/
