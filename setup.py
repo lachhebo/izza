@@ -9,7 +9,7 @@ setuptools.setup(
     author="Ismaël Lachheb",
     author_email="ismael.lachheb@protonmail.com",
     description="A Personnal machine learning toolbox",
-    long_description=long_description,
+    long_description="this package contain macro and functions i would like to uses in many context",
     long_description_content_type="text/markdown",
     url="https://github.com/lachhebo/izza", 
     packages=setuptools.find_packages(),
