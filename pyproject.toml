@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "izza"
-version = "0.3.0"
+version = "0.4.0"
 description = "my machine learning toolkit"
 authors = ["Ismael Lachheb <ismael.lachheb@protonmail.com>"]
 readme="README.md"
@@ -9,7 +9,7 @@ license = "BSD"
  keywords = ["data viz", "machine learning"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 pandas = "^1.2.3"
 scikit-learn = "^0.24.1"
 matplotlib = "^3.4.1"
