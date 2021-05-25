@@ -1,6 +1,6 @@
 # Izza 
 
-ieieiieiei is my personal data science and machine learning toolbox.
+izza is my personal data science and machine learning toolbox.
 
 there is mainly personal function for data visualisation: 
 
@@ -12,7 +12,7 @@ there is mainly personal function for data visualisation:
 | kohohen maps|a kohohen maps with percentage of target class by neuron|
 | activation_frequencies| activation frequencies for a kohohen map |
 
-There is methods to do model evaluation : 
+There is method to do model evaluation : 
 
 
 | function name | presentation |
