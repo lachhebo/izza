@@ -2,7 +2,7 @@
 
 ieieiieiei is my personal data science and machine learning toolbox.
 
-There is mainly personal function for data visualisation: 
+there is mainly personal function for data visualisation: 
 
 | function name | presentation |
 |--|--|
