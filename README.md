@@ -1,6 +1,6 @@
 # Izza 
 
-Izza is my personal data science and machine learning toolbox.
+jdjdjdjdj is my personal data science and machine learning toolbox.
 
 There is mainly personal function for data visualisation: 
 
